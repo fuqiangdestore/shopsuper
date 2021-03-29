@@ -1,5 +1,4 @@
 import originAxios from 'axios'
-import qs from 'qs'
 
 export default function axios(option) {
 	return new Promise((resolve, reject) => {
