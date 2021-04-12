@@ -1,6 +1,7 @@
 <template>
   <div id="PopularView">
     <h4>本周流行</h4>
+    <!-- <div>{{this.recommends}}</div> -->
     <div class="pop-item" v-for="(item, index) in popData" :key="index">
       <img :src="item.image" alt="">
       <p>{{item.title}}</p>
@@ -12,7 +13,10 @@
 export default {
   name:'PopularView',
   props: {
-    recommends: {}
+    recommends: {
+      default: null,
+      type:Array
+    }
   },
   data() {
     return {
@@ -21,15 +25,14 @@ export default {
     }
   },
   created() {
+    this.changeData()
   },
   mounted() {
-    this.changeData()
   },
   methods: {
     changeData() {
+      // this.popData = this.popData.push(...this.recommends)
       console.log('popularview',this.recommends);
-      this.popData = this.recommends.concat(this.recommends)
-      console.log('popData',this.popData)
     }
 
   },

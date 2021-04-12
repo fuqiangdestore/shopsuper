@@ -9,14 +9,19 @@
 
 <script>
 export default {
-  data() {
-    return {
-
+  name: 'recommend',
+  props: {
+    recommends: {
+      default() {
+        return []
+      },
+      type: Array
     }
   },
-  props: {
-    recommends: {}
-
+  data() {
+    return {
+      recomData: []
+    }
   },
   computed: {
 
@@ -26,7 +31,8 @@ export default {
   },
   methods: {
     case() {
-      console.log('recommends',this.recommends)
+      console.log('recommends11',this.recommends)
+
     }
 
   }

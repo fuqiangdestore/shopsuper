@@ -10,128 +10,22 @@
         </van-swipe-item>
       </van-swipe>
     </div>
+      <div id="print_demo" >
+    <p>123123123</p>    <p>123123123</p>
+    <p>123123123</p>
+    <p>123123123</p>
+    <p>123123123</p>
+    <p>123123123</p>
+    <p>123123123</p>
+
+  </div>
+
+    <button @click="printClick">打印</button>
     <recommend :recommends='recommends'></recommend>
     <popular-view :recommends='recommends'></popular-view>
-    <tab-control class="tab_control" :titles='titles'></tab-control>
-    <ul>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-      <li>1</li>
-    </ul>
+    <tab-control class="tab_control" :titles='titles'
+      @tabClick='tabClick'></tab-control>
+    <goods-list :goods="showGoods"></goods-list>
   </div>
 </template>
 
@@ -141,6 +35,7 @@ import PopularView from './homeChild/PopularView'
 
 import NavBar from "../../components/common/navbar/NavBar";
 import TabControl from '../../components/content/tabcontrol/TabContral'
+import GoodsList from '../../components/content/goods/GoodsList'
 
 import { Swipe, SwipeItem,Lazyload } from "vant";
 import { getHomeMultidata, getHomeGoods } from "../../network/home";
@@ -150,6 +45,7 @@ export default {
     Recommend,
     PopularView,
     TabControl,
+    GoodsList,
     [Swipe.name]: Swipe,
     [SwipeItem.name]: SwipeItem,
     [Lazyload.name]: Lazyload
@@ -171,34 +67,14 @@ export default {
           page: 0, list: []
         },
     },
-    num1: [{name: '1'}, 2, 3, 4, 5]
-    };
+    num1: [{name: '1'}, 2, 3, 4, 5],
+    currentType: 'pop'
+    }
   },
   computed: {
-
-  },
-  mounted() {
-
-  },
-  methods: {
-    getHomeGoods(type) {
-      const page = this.goods[type].page + 1
-      getHomeGoods(type, page)
-      .then(res => {
-        this.goods[type].list.push(...res.data.list)
-        this.goods[type].page+= 1
-      })
-    },
-    getHomeMultidata() {
-    getHomeMultidata().then(res => {
-      const { data, success } = res;
-      if (success === true) {
-        this.banners = data.banner.list;
-        this.recommends = data.recommend.list;
-      }
-    });
+    showGoods() {
+      return this.goods[this.currentType].list
     }
-
 
   },
   created() {
@@ -207,8 +83,44 @@ export default {
     this.getHomeGoods('pop')
     this.getHomeGoods('new')
     this.getHomeGoods('sell')
+  },
+  methods: {
+    // 上部分数据
+    async getHomeMultidata() {
+      const { data, success } = await getHomeMultidata()
+      if (success === true) {
+        this.banners = data.banner.list;
+        this.recommends = data.recommend.list;
+      }
+      console.log('父组件', this.recommends)
+    },
+    // 获取商品数据
+    getHomeGoods(type) {
+      const page = this.goods[type].page + 1
+      getHomeGoods(type, page)
+      .then(res => {
+        this.goods[type].list.push(...res.data.list)
+        this.goods[type].page+= 1
+      })
+      console.log('goods',this.goods);
+    },
+    tabClick(index) {
+      switch(index) {
+        case 0:
+          this.currentType = 'pop'
+          break
+        case 1:
+          this.currentType = 'new'
+          break
+        case 2:
+          this.currentType = 'sell'
+          break
+      }
+      console.log(this.currentType);
+      console.log(this.goods[this.currentType].list);
 
-  }
+    }
+  },
 };
 </script>
 

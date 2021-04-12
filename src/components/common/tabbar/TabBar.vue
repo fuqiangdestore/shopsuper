@@ -30,6 +30,7 @@ export default {
 
   height: 49px;
   border-top: 1px solid #eee;
+  background-color: #fff;
   
 }
 </style>
