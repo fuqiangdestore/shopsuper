@@ -10,17 +10,6 @@
         </van-swipe-item>
       </van-swipe>
     </div>
-      <div id="print_demo" >
-    <p>123123123</p>    <p>123123123</p>
-    <p>123123123</p>
-    <p>123123123</p>
-    <p>123123123</p>
-    <p>123123123</p>
-    <p>123123123</p>
-
-  </div>
-
-    <button @click="printClick">打印</button>
     <recommend :recommends='recommends'></recommend>
     <popular-view :recommends='recommends'></popular-view>
     <tab-control class="tab_control" :titles='titles'
