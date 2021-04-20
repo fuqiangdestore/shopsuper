@@ -3,6 +3,7 @@
     <nav-bar class="home_nav">
       <div slot="center">购物街</div>
     </nav-bar>
+    <scroll class="content">
     <div class="home_swiper">
       <van-swipe class="my-swipe" :autoplay="1000" indicator-color="white">
         <van-swipe-item v-for="(image,index) in banners" :key="index">
@@ -15,6 +16,8 @@
     <tab-control class="tab_control" :titles='titles'
       @tabClick='tabClick'></tab-control>
     <goods-list :goods="showGoods"></goods-list>
+    </scroll>
+    <back-top></back-top>
   </div>
 </template>
 
@@ -23,6 +26,8 @@ import Recommend from "./homeChild/recommend";
 import PopularView from './homeChild/PopularView'
 
 import NavBar from "../../components/common/navbar/NavBar";
+import Scroll from '../../components/common/scroll/Scroll'
+import BackTop from '../../components/content/backTop'
 import TabControl from '../../components/content/tabcontrol/TabContral'
 import GoodsList from '../../components/content/goods/GoodsList'
 
@@ -35,6 +40,8 @@ export default {
     PopularView,
     TabControl,
     GoodsList,
+    Scroll,
+    BackTop,
     [Swipe.name]: Swipe,
     [SwipeItem.name]: SwipeItem,
     [Lazyload.name]: Lazyload
@@ -81,7 +88,6 @@ export default {
         this.banners = data.banner.list;
         this.recommends = data.recommend.list;
       }
-      console.log('父组件', this.recommends)
     },
     // 获取商品数据
     getHomeGoods(type) {
@@ -115,7 +121,8 @@ export default {
 
 <style>
 #home{
-  padding-top: 44px;
+  /* padding-top: 44px; */
+  height: 100vh;
 }
 .home_nav {
   background: pink;
@@ -137,6 +144,9 @@ export default {
   .tab_control{
     position: sticky;
     top: 44px;
-
   }
+.content{
+  height: calc(100%-98px);
+  /* overflow: hidden; */
+}
 </style>
